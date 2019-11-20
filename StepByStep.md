@@ -27,6 +27,15 @@ $ curl http://localhost:8888/api/
 > {"message":"Hello world!"}
 ```
 
+## v0.0.2 - initialise react
 
+```sh
+# at the root of your project
+npx create-react-app frontend
+cd frontend
+npm start
 
+# Your browser opens on the generic reactJS landing page
+```
 
+You might then edit and customise a few of the default created resources to tune your app.
