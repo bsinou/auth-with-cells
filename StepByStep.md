@@ -39,3 +39,22 @@ npm start
 ```
 
 You might then edit and customise a few of the default created resources to tune your app.
+
+## v0.0.3 - integrate go and react
+
+Once you have the preceeding steps done, you can easily integrate Go and Js parts by exposing the built JS via the main Gin router in Go. In our context, we simply have to add a route at the base path in your gin router to forward all traffic to your static files:
+
+```go
+router.Use(static.Serve("/", static.LocalFile("./frontend/build", true)))
+```
+
+A very common trick is then to add `"proxy": "http://localhost:8888",` to your `frontend/package.json` file, this adds a proxy that lets you start both the go server and the react app (via nodejs) while being able to directly see the changes you make in the ReactJS app in your browser when developping. See [this post](https://create-react-app.dev/docs/proxying-api-requests-in-development/) for more info.
+
+### Use axios to make API calls from the frontend to the backend
+
+To validate this works, we include axios in our dependencies:
+
+```sh
+cd frontend
+npm install --save axios
+```

@@ -9,3 +9,8 @@ Once logged in, the page display _Hello <your display name>!_ and an option to l
 
 _All the following as been written and tested on CentOS, adapt if necessary_.
 
+## Resources
+
+Along the way, you might find this various articles interresting to better understand what is happening.
+
+- A short [introduction to Redux](https://medium.com/wineofbits/use-redux-in-your-react-app-in-just-10-minutes-8da6e9f043c5)
