@@ -1,6 +1,9 @@
 package main
 
 import (
+	"fmt"
+	"log"
+
 	"github.com/gin-gonic/gin"
 	"github.com/gobuffalo/packr"
 )
@@ -9,8 +12,15 @@ func main() {
 	router := gin.Default()
 
 	// Test serving static file when deployed on the server
+	// box := packr.NewBox("./frontend/build")
 	box := packr.NewBox("./frontend/build")
 	router.StaticFS("/", box)
+
+	s, err := box.FindString("index.html")
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println(s)
 
 	// // Serve ReactJs compiled files with Packr under /ui prefix
 	// box := packr.NewBox("./frontend/build")
