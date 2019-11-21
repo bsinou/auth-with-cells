@@ -13,7 +13,13 @@ func main() {
 	// Serve ReactJs compiled files
 	router.Use(static.Serve("/", static.LocalFile("./frontend/build", true)))
 
-	// Authenticated route
+	// Dummy auth entry point
+	authG := router.Group("/auth")
+	{
+		authG.POST("/login", backend.PerformDummyLogin)
+	}
+
+	// Authenticated routes
 	api := router.Group("/api")
 	{
 		api.GET("/", backend.Hello)

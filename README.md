@@ -13,4 +13,5 @@ _All the following as been written and tested on CentOS, adapt if necessary_.
 
 Along the way, you might find this various articles interresting to better understand what is happening.
 
+- An quick overview on [Serving a React app with GoLang using Gin](https://medium.com/@synapticsynergy/serving-a-react-app-with-golang-using-gin-c6402ee64a4b)
 - A short [introduction to Redux](https://medium.com/wineofbits/use-redux-in-your-react-app-in-just-10-minutes-8da6e9f043c5)

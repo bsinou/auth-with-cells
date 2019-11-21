@@ -34,7 +34,6 @@ $ curl http://localhost:8888/api/
 npx create-react-app frontend
 cd frontend
 npm start
-
 # Your browser opens on the generic reactJS landing page
 ```
 
@@ -57,4 +56,28 @@ To validate this works, we include axios in our dependencies:
 ```sh
 cd frontend
 npm install --save axios
+```
+
+And implement a very basic call to the api using a skeleton of the Hello handler that will be re-used after when plug in Cells.
+
+## v0.0.4 - add Redux to the mix
+
+```sh
+cd frontend
+npm install --save redux react-redux redux-thunk
+# Out of lazyness, also add material UI core, to easily add a button
+npm install --save @material-ui/core
+```
+
+You can check the `index.js` file to see the _tricks_ we use to ease development when using redux:
+
+- You might also want to install and enable dev tools plugins for react and redux in your browser.
+- We add a middleware that enables debugging the redux state and actions in dev mode via Chrome.
+- Normally reducers in Redux are synchronous, we add thunk to also support promises and so enable API call via axios in the reducers_.
+
+Once Redux has been installed and the go backend updated, you can test :
+
+```sh
+# check if the backend returns expected response:
+curl -i -X POST -H "Content-Type:application/json" http://localhost:8888/auth/login -d '{"email":"alice@example.com","password":"pwd","returnSecureToken":true}'
 ```

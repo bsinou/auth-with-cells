@@ -1,30 +1,15 @@
 import React, { Component } from 'react';
 
-import axios from 'axios'
-
-// Dummy page that will display different pages depending on the auth state
+// Dummy page that displays distinct texts depending on the auth state
+// And has a link to login / logout
 import MainPage from './MainPage'
 
 // Default styling from React
 import './App.css';
 
 class App extends Component {
-
-  componentDidMount() {
-    // Simply insure we can reach the API server
-    axios.get('/api/').then(
-      response => {
-        console.log(response)
-      }
-    );
-  }
-
   render() {
-    let dName = "Emma Kohl";
-
-    return (
-      <MainPage isAuth={true} displayName={dName} />
-    );
+    return ( <MainPage />);
   }
 }
 
