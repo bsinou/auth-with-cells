@@ -126,4 +126,6 @@ go build -o awc main.go
 
 You can now deploy your binary on your server, and start it.
 
+_Note: although builds should be Linux-type independant, we noticed that the Packr process fails to display js file when building on a CentOS machine and deploying on a Debian, while the opposite works_.
+
 We will now focus on the funny part: adding Cells as an identity provider.
