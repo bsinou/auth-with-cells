@@ -2,7 +2,6 @@
   "name": "auth-with-cells",
   "version": "0.1.0",
   "private": true,
-  "homepage": "/ui",
   "proxy": "http://localhost:8888",
   "dependencies": {
     "@material-ui/core": "^4.6.1",
