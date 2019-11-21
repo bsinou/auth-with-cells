@@ -81,3 +81,49 @@ Once Redux has been installed and the go backend updated, you can test :
 # check if the backend returns expected response:
 curl -i -X POST -H "Content-Type:application/json" http://localhost:8888/auth/login -d '{"email":"alice@example.com","password":"pwd","returnSecureToken":true}'
 ```
+
+## v0.1.0 - Wrap up
+
+At this point we have a working Golang App that exposes a front-end that is Redux enabled and can communicate with the go backend smoothly to update its state.
+
+We can now bundle this and start only the go app:
+
+```sh
+# Package the javascript with npm
+cd frontend
+npm run build
+# Build the Go binary
+cd ..
+go build -o awc main.go
+# Start the app
+./awc
+```
+
+Yet, if you push your binary to your server and launch it, you will get:
+
+- some json back when visiting `<your IP address>:8888>/api/`
+- a 404 error if you visit the root of your website: `<your IP address>:8888>`
+
+It comes from the fact that your static built js files are not by default embedded in the go binary. That is when [Packr](https://github.com/gobuffalo/packr) comes to the rescue.
+
+First we have to adapt our code a little bit, see `main.go`:
+
+- declare a box
+- expose it a static files under `/ui`: we cannot expose a raw file system at the root of the website
+- declare the prefix in the `package.json` file, so that the prefixed is used only in deployment mode
+- add a redirect at root path toward `/ui`, so that the end user can still access the website at `<your domain name>`.
+
+```sh
+# First install packer from *outside of your project*
+cd
+go get -u github.com/gobuffalo/packr/packr
+cd -
+# Then to bundle the static files as go files
+$GOPATH/bin/packr -v
+# Finally rebuild the Go binary that embeds everything:
+go build -o awc main.go
+```
+
+You can now deploy your binary on your server, and start it.
+
+We will now focus on the funny part: adding Cells as an identity provider.

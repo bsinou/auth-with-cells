@@ -1,8 +1,10 @@
 package main
 
 import (
-	"github.com/gin-gonic/contrib/static"
+	"net/http"
+
 	"github.com/gin-gonic/gin"
+	"github.com/gobuffalo/packr"
 
 	"github.com/bsinou/auth-with-cells/backend"
 )
@@ -10,8 +12,13 @@ import (
 func main() {
 	router := gin.Default()
 
-	// Serve ReactJs compiled files
-	router.Use(static.Serve("/", static.LocalFile("./frontend/build", true)))
+	// Serve ReactJs compiled files with Packr under /ui prefix
+	box := packr.NewBox("./frontend/build")
+	router.StaticFS("/ui", box)
+	// and redirect the root of the website
+	router.GET("/", func(c *gin.Context) {
+		c.Redirect(http.StatusMovedPermanently, "/ui")
+	})
 
 	// Dummy auth entry point
 	authG := router.Group("/auth")
