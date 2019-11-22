@@ -16,3 +16,4 @@ Along the way, you might find this various articles interresting to better under
 - An quick overview on [Serving a React app with GoLang using Gin](https://medium.com/@synapticsynergy/serving-a-react-app-with-golang-using-gin-c6402ee64a4b)
 - A short [introduction to Redux](https://medium.com/wineofbits/use-redux-in-your-react-app-in-just-10-minutes-8da6e9f043c5)
 - A 3mn read [introduction to openid connect](https://medium.com/@samichkhachkhi/introduction-to-openid-connect-9e7330083d3c)
+- A nice short post on [how to deploy a React app to a subfolder](https://medium.com/@svinkle/how-to-deploy-a-react-app-to-a-subdirectory-f694d46427c1) that helps when it comes to deploy your app on your server.
