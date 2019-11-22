@@ -1,6 +1,8 @@
 package main
 
 import (
+	"fmt"
+	"log"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -14,6 +16,13 @@ func main() {
 
 	// Serve ReactJs compiled files with Packr under /ui prefix
 	box := packr.NewBox("./frontend/build")
+	// Simple check to insure the JS is there, even in deployed mode.
+	s, err := box.FindString("index.html")
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println(s)
+
 	router.StaticFS("/ui", box)
 	// and redirect the root of the website
 	router.GET("/", func(c *gin.Context) {

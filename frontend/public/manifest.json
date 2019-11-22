@@ -1,0 +1,16 @@
+{
+    "short_name": "Auth with Cells",
+    "name": "A dummy sample to illustrate how to use Pydio Cells as an identity provider",
+    "icons": [
+      {
+        "src": "favicon.png",
+        "sizes": "16x16",
+        "type": "image/png"
+      }
+    ],
+    "start_url": ".",
+    "display": "standalone",
+    "theme_color": "#000000",
+    "background_color": "#ffffff"
+  }
+  
