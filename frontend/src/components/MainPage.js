@@ -47,10 +47,9 @@ class MainPage extends Component {
     let page = (
       <div className="App">
         <header className="App-header">
-          <p>{
-            notAuth ? "Hello World!" : "Hello " + user.profile.name + "!"}
-          </p>
+          <p>{ notAuth ? "Hello World!" : "Hello " + user.profile.name + "!"}</p>
           {button}
+          <p> A message variable: {process.env.REACT_APP_MSG}</p>
         </header>
       </div>
     );

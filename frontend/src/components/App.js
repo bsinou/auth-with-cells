@@ -14,12 +14,11 @@ const history = createBrowserHistory();
 class App extends Component {
   render() {
     return (
-      <Router history={history} basename={'/ui'}>
+      <Router history={history} basename={process.env.PUBLIC_URL}>
         <div>
-          <Route path={`${process.env.PUBLIC_URL}/`} component={MainPage} />
-          <Route path={`${process.env.PUBLIC_URL}/test`} component={TestPage} />
-          <Route path={`${process.env.PUBLIC_URL}/callback`} component={CallbackPage} />
-          {/* <Redirect key="default-redirect" to="/" /> */}
+          <Route path="/test" component={TestPage} />
+          <Route path="/callback" component={CallbackPage} />
+          <Route path="/" component={MainPage} />
         </div>
       </Router>
     );
