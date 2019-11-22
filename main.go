@@ -26,7 +26,7 @@ func main() {
 	router.StaticFS("/ui", box)
 	// and redirect the root of the website
 	router.GET("/", func(c *gin.Context) {
-		c.Redirect(http.StatusMovedPermanently, "/ui")
+		c.Redirect(http.StatusMovedPermanently, "/ui/")
 	})
 
 	// Dummy auth entry point
