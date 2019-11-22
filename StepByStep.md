@@ -5,7 +5,9 @@ We regularly make SNAPSHOT of the state of the code with branches in order for t
 
 _All the following as been written and tested on CentOS, adapt if necessary_.
 
-## v0.0.1 - initialise golang part
+## Prepare a base project
+
+### v0.0.1 - initialise golang part
 
 - Install the various required software
 - Create a repo on github and clone it locally
@@ -27,7 +29,7 @@ $ curl http://localhost:8888/api/
 > {"message":"Hello world!"}
 ```
 
-## v0.0.2 - initialise react
+### v0.0.2 - initialise react
 
 ```sh
 # at the root of your project
@@ -39,7 +41,7 @@ npm start
 
 You might then edit and customise a few of the default created resources to tune your app.
 
-## v0.0.3 - integrate go and react
+### v0.0.3 - integrate go and react
 
 Once you have the preceeding steps done, you can easily integrate Go and Js parts by exposing the built JS via the main Gin router in Go. In our context, we simply have to add a route at the base path in your gin router to forward all traffic to your static files:
 
@@ -49,7 +51,7 @@ router.Use(static.Serve("/", static.LocalFile("./frontend/build", true)))
 
 A very common trick is then to add `"proxy": "http://localhost:8888",` to your `frontend/package.json` file, this adds a proxy that lets you start both the go server and the react app (via nodejs) while being able to directly see the changes you make in the ReactJS app in your browser when developping. See [this post](https://create-react-app.dev/docs/proxying-api-requests-in-development/) for more info.
 
-### Use axios to make API calls from the frontend to the backend
+#### Use axios to make API calls from the frontend to the backend
 
 To validate this works, we include axios in our dependencies:
 
@@ -60,7 +62,7 @@ npm install --save axios
 
 And implement a very basic call to the api using a skeleton of the Hello handler that will be re-used after when plug in Cells.
 
-## v0.0.4 - add Redux to the mix
+### v0.0.4 - add Redux to the mix
 
 ```sh
 cd frontend
@@ -82,7 +84,7 @@ Once Redux has been installed and the go backend updated, you can test :
 curl -i -X POST -H "Content-Type:application/json" http://localhost:8888/auth/login -d '{"email":"alice@example.com","password":"pwd","returnSecureToken":true}'
 ```
 
-## v0.1.0 - Wrap up
+### v0.1.0 - Wrap up
 
 At this point we have a working Golang App that exposes a front-end that is Redux enabled and can communicate with the go backend smoothly to update its state.
 
@@ -119,7 +121,7 @@ cd
 go get -u github.com/gobuffalo/packr/packr
 cd -
 # Then to bundle the static files as go files
-$GOPATH/bin/packr -v
+$GOPATH/bin/packr -v build
 # Finally rebuild the Go binary that embeds everything:
 go build -o awc main.go
 ```
@@ -129,3 +131,20 @@ You can now deploy your binary on your server, and start it.
 _Note: although builds should be Linux-type independant, we noticed that the Packr process fails to display js file when building on a CentOS machine and deploying on a Debian, while the opposite works_.
 
 We will now focus on the funny part: adding Cells as an identity provider.
+
+## Using Cells as an Identity Provider
+
+### v0.1.1 - introducing the redux-oidc library
+
+OAuth and oidc flows are not easy to implement and are good possible point of failure that could lead to very nasty things if the security is compromised.  
+Thus, we strongly advise to pick up a certified third party library, that has been certified, to be included in your project.
+
+In our example, we choose [oidc-client from IdentityModel](github.com/IdentityModel/oidc-client-js/) together with the [redux-oidc](https://github.com/maxmantz/redux-oidc) library that wraps it and easeits use. You can find a list of [Certified OpenID implementations](https://openid.net/developers/certified/) in the [website of the OpenID project](https://openid.net).
+
+```sh
+# add the library to our project
+cd frontend
+npm install --save oidc-client redux-oidc
+```
+
+The configuration steps are then quite well explained [in their wiki](https://github.com/maxmantz/redux-oidc/wiki/2.-Configuration). We do accordingly in our `index.js` file.
