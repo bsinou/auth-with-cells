@@ -1,23 +1,23 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-
-import { createStore, applyMiddleware, compose } from "redux";
 import { Provider } from 'react-redux';
-import thunk from 'redux-thunk';
+import { OidcProvider } from 'redux-oidc';
 
-import authReducer from "./store/authReducer";
+import store from './store/store';
+import userManager from './store/userManager';
 
-// Enable Redux devtool in dev mode (chrome only)
-const composeEnhancers = (process.env.NODE_ENV === 'development' ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : null) || compose;
-const store = createStore(authReducer, composeEnhancers(applyMiddleware(thunk)));
+import App from './components/App';
 
+// Default styling from React
+import './index.css';
+
+// register the OidcProvider nested below react-redux's Provider
 const app = (
     <Provider store={store}>
-        <App />
+        <OidcProvider store={store} userManager={userManager}>
+            <App />
+        </OidcProvider>
     </Provider>
 )
 
-ReactDOM.render(app, document.getElementById('root'));
-
+ReactDOM.render(app, document.getElementById('app'));

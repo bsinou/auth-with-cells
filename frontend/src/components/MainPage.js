@@ -3,16 +3,18 @@ import { connect } from 'react-redux';
 
 import { Button } from '@material-ui/core';
 
-import * as actions from './store/authActions';
-
-const defaultMail = 'alice@example.com';
-const defaultPwd = 'password';
+import userManager from "../store/userManager";
 
 class MainPage extends Component {
 
   submitHandler = (event) => {
+
     event.preventDefault();
-    this.props.isAuth ?  this.props.logout() :  this.props.doAuth(defaultMail, defaultPwd);
+    if (!this.props.user || this.props.expired) {
+      userManager.signinRedirect();
+    } else {
+      userManager.removeUser(); // removes the user data from sessionStorage
+    }
   }
 
   handleKeyPress = (event) => {
@@ -28,15 +30,17 @@ class MainPage extends Component {
   };
 
   render() {
+    const { user } = this.props;
+    let notAuth = !user || user.expired
     // Login / Logout button
     let button = (<Button
       label="Submit"
       variant="contained"
-      color={this.props.isAuth ? "secondary" : "primary"}
+      color={notAuth ? "primary" : "secondary"}
       aria-label="submit"
       style={{ margin: 15 }}
       onClick={(event) => this.submitHandler(event)} >
-      {this.props.isAuth ? "Logout" : "Login"}
+      {notAuth ? "Login" : "Logout"}
     </Button>);
 
     // The page
@@ -44,7 +48,7 @@ class MainPage extends Component {
       <div className="App">
         <header className="App-header">
           <p>{
-            this.props.isAuth ? "Hello " + this.props.displayName + "!" : "Hello World!"}
+            notAuth ? "Hello World!" : "Hello " + user.profile.name + "!"}
           </p>
           {button}
         </header>
@@ -55,21 +59,16 @@ class MainPage extends Component {
   }
 }
 
-const mapStateToProps = state => {
+function mapStateToProps(state) {
   return {
-    isAuth: state.token !== null,
-    displayName: state.displayName,
-    loading: state.loading,
-    error: state.error
+    user: state.oidc.user
   };
-};
+}
 
-const mapDispatchToProps = dispatch => {
+function mapDispatchToProps(dispatch) {
   return {
-    doAuth: (email, password) => dispatch(actions.doAuth(email, password)),
-    logout: () => dispatch(actions.authLogout())
+    dispatch
   };
-};
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainPage);
-
