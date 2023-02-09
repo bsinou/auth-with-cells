@@ -3,9 +3,10 @@ module github.com/bsinou/auth-with-cells
 go 1.12
 
 require (
-	github.com/gin-gonic/gin v1.4.0
+	github.com/gin-gonic/gin v1.7.7
 	github.com/gobuffalo/packr v1.30.1
-	golang.org/x/net v0.0.0-20191119073136-fc4aabc6c914 // indirect
+	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
+	github.com/modern-go/reflect2 v1.0.1 // indirect
 )
 
 // Fix a conflict with module dependencies see: https://github.com/ugorji/go/issues/279#issuecomment-457813818
